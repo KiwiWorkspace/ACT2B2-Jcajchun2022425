@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${modoEdicion} ? 'Editar Usuario' : 'Nuevo Usuario'"></title>
+
+    <style>
+        body {
+            font-family: 'Nunito', Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            background: #fff8e1;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid #facc15;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #b45309;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #92400e;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 6px;
+            border: 1px solid #facc15;
+            background: #fffdf5;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #eab308;
+            box-shadow: 0 0 5px #fde68a;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .acciones {
+            margin-top: 20px;
+        }
+
+        /* BOTONES */
+        .btn-edit-admin, .btn-del-admin {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit-admin {
+            background: #facc15;
+            color: #78350f;
+        }
+
+        .btn-edit-admin:hover {
+            background: #eab308;
+        }
+
+        .btn-del-admin {
+            background: #fde68a;
+            color: #78350f;
+            margin-left: 8px;
+        }
+
+        .btn-del-admin:hover {
+            background: #fcd34d;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:text="${modoEdicion} ? 'Editar Usuario' : 'Editar Usuario'"></h1>
+
+    <form th:action="@{/usuarios/editar}"
+          th:object="${usuario}"
+          method="post">
+
+        <input type="hidden" th:field="*{idUsuario}" />
+
+        <div class="campo">
+            <label for="nombreUsuario">Nombre</label>
+            <input type="text" id="nombreUsuario" th:field="*{nombreUsuario}">
+            <div class="error"
+                 th:if="${#fields.hasErrors('nombreUsuario')}"
+                 th:errors="*{nombreUsuario}"></div>
+        </div>
+
+        <div class="campo">
+            <label for="apellidoUsuario">Apellido</label>
+            <input type="text" id="apellidoUsuario" th:field="*{apellidoUsuario}">
+            <div class="error"
+                 th:if="${#fields.hasErrors('apellidoUsuario')}"
+                 th:errors="*{apellidoUsuario}"></div>
+        </div>
+
+        <div class="campo">
+            <label for="edadUsuario">Edad</label>
+            <input type="text" id="edadUsuario" th:field="*{edadUsuario}">
+            <div class="error"
+                 th:if="${#fields.hasErrors('edadUsuario')}"
+                 th:errors="*{edadUsuario}"></div>
+        </div>
+
+        <div class="acciones">
+            <button type="submit" class="btn-edit-admin">
+                Guardar
+            </button>
+
+            <a th:href="@{/usuarios}">
+                <button type="button" class="btn-del-admin">
+                    Cancelar
+                </button>
+            </a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

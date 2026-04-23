@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(150deg, #ffaa00 0%, #ffcc44 55%, #ffe888 100%);
+            padding: 20px;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .tarjeta {
+            background: #ffffff;
+            border-radius: 18px;
+            border: 3px solid #d4900a;
+            box-shadow: 0 10px 32px rgba(0,0,0,0.18);
+            overflow: hidden;
+            animation: aparecer 0.5s ease;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .tarjeta-header {
+            background: linear-gradient(90deg, #c83200 0%, #e04a18 100%);
+            border-bottom: 3px solid #8a1a00;
+            padding: 20px 28px;
+            text-align: center;
+        }
+
+        .titulo {
+            font-family: 'Fredoka One', cursive;
+            font-size: 32px;
+            color: #ffd060;
+            text-shadow: 2px 3px 0 #7a1200;
+            letter-spacing: 1px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .subtitulo {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffd080;
+            letter-spacing: 0.5px;
+        }
+
+        .tarjeta-body {
+            background: #fff8e1;
+            padding: 28px;
+        }
+
+        .mensaje {
+            margin-bottom: 18px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .mensaje.error {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1.5px solid #fca5a5;
+        }
+
+        .mensaje.success {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1.5px solid #86efac;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 12px;
+            color: #92400e;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 800;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid #facc15;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            outline: none;
+            background: #fffdf5;
+            color: #1a1a1a;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .campo input:focus {
+            border-color: #eab308;
+            box-shadow: 0 0 0 3px #fde68a88;
+        }
+
+        .campo input::placeholder { color: #c4a35a; }
+
+        .boton {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #facc15;
+            color: #78350f;
+            font-size: 15px;
+            font-weight: 900;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 6px;
+            box-shadow: 0 4px 0 #b87010;
+        }
+
+        .boton:hover {
+            background: #eab308;
+            transform: translateY(-2px);
+        }
+
+        .boton:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 #b87010;
+        }
+
+        @media (max-width: 480px) {
+            .tarjeta-body { padding: 22px 18px; }
+            .titulo { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <div class="tarjeta">
+
+        <div class="tarjeta-header">
+            <h2 class="titulo">Kiwi Store</h2>
+            <p class="subtitulo">Crea tu cuenta para continuar</p>
+        </div>
+
+        <div class="tarjeta-body">
+
+            <div th:if="${param.login}" class="mensaje success">
+                Cuenta creada exitosamente
+            </div>
+            <div th:if="${param.error}" class="mensaje error">
+                Error en el registro
+            </div>
+
+            <form th:action="@{/register}" method="post">
+                <div class="campo">
+                    <label for="nombreUsuario">Usuario</label>
+                    <input type="text" id="nombreUsuario" name="nombreUsuario" placeholder="Ingrese su usuario" required>
+                </div>
+
+                <div class="campo">
+                    <label for="apellidoUsuario">Apellido</label>
+                    <input type="text" id="apellidoUsuario" name="apellidoUsuario" placeholder="Ingrese su apellido" required>
+                </div>
+
+                <div class="campo">
+                    <label for="edadUsuario">Edad</label>
+                    <input type="text" id="edadUsuario" name="edadUsuario" placeholder="Ingrese su edad" required>
+                </div>
+
+                <div class="campo">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+                </div>
+
+                <div class="campo">
+                    <label for="passwordcheck">Confirmar contraseña</label>
+                    <input type="password" id="passwordcheck" name="passwordcheck" placeholder="Confirme su contraseña" required>
+                </div>
+
+                <button type="submit" class="boton">Registrarse</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
